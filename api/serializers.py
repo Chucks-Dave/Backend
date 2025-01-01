@@ -5,6 +5,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 import io
 import sys
+from cloudinary.forms import CloudinaryFileField
 
 
 class GraduateRegistrationSerializer(serializers.Serializer):
@@ -21,7 +22,7 @@ class GraduateRegistrationSerializer(serializers.Serializer):
     # is_verified = serializers.BooleanField(default=False)
     # otp = serializers.CharField(max_length=6, )
     gender = serializers.CharField(max_length=10)
-    profile_picture = serializers.ImageField(required=True)
+    profile_picture = CloudinaryFileField(required=True)
     address = serializers.CharField(max_length=255)
     institution = serializers.CharField(max_length=255)
     course_studied = serializers.CharField(max_length=255)
@@ -39,7 +40,7 @@ class GraduateRegistrationSerializer(serializers.Serializer):
             choices=[('Job1', 'Job1'), ('Job2', 'Job2'), ('Job3', 'Job3')])
     )
     relocate = serializers.CharField(max_length=255)
-    cv = serializers.FileField(required=True)
+    cv = CloudinaryFileField(required=True)
     relocation_availability = serializers.CharField(max_length=255)
     comments = serializers.CharField(required=False)
     reference = serializers.CharField(max_length=255)
@@ -112,8 +113,8 @@ class GraduateRegistrationSerializer(serializers.Serializer):
             "email": instance.user.email,
             "full_name": instance.user.full_name,
             "phone_number": instance.phone_number,
-            "cv": instance.cv.url if instance.cv else None,
-            "profile_picture": instance.profile_picture.url if instance.profile_picture else None,
+            "cv": instance.cv,
+            "profile_picture":  instance.profile_picture if instance.profile_picture else None,
             "address": instance.address,
             # ... any other fields
         }

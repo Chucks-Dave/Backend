@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 
+import cloudinary.api
+import cloudinary.uploader
+import cloudinary
 from datetime import timedelta
 import os
 from pathlib import Path
@@ -207,14 +210,42 @@ AUTH_USER_MODEL = 'api.CustomUser'
 CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# MEDIA_URL = '/media/'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# cloudinary.config = {
+#     'cloud_name': 'dtcqihuls',
+#     'api_key': '625467182994816',
+#     'api_secret': 'h8AMt45YYUfg3cNFhrtGtZD96CQ',
+# }
+# cloudinary.config(
+#     cloud_name="dtcqihuls",
+#     api_key="625467182994816",
+#     api_secret="h8AMt45YYUfg3cNFhrtGtZD96CQ",
+#     secure=True,
+# )
+
+
+# Cloduinary Configuration
+
+# Cloudinary storage configuration
+
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dtcqihuls',
+    'CLOUD_NAME': "dtcqihuls",
     'API_KEY': '625467182994816',
-    'API_SECRET': 'h8AMt45YYUfg3cNFhrtGtZD96CQ',
+    'API_SECRET': "h8AMt45YYUfg3cNFhrtGtZD96CQ",
 }
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Extra Configuration
+cloudinary.config(
+    cloud_name='dtcqihuls',
+    api_key='625467182994816',
+    api_secret="h8AMt45YYUfg3cNFhrtGtZD96CQ",
+)
 # settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -222,4 +253,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'Okechukwudavid305@gmail.com'
 EMAIL_HOST_PASSWORD = 'kznv hepj liex qaem'
-DEFAULT_FROM_EMAIL = 'okechukwudavid@gmail.com'
+DEFAULT_FROM_EMAIL = 'okechukwudavid305@gmail.com'

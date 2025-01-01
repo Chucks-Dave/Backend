@@ -6,6 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from .managers import UserManager
 from django.utils.translation import gettext_lazy as _
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 DEGREE_CHOICES = [
@@ -72,7 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
 
     def __str__(self):
-        return "email" + self.email
+        return str(self.full_name)
 
 
 class Graduate(models.Model):
@@ -83,8 +84,8 @@ class Graduate(models.Model):
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=10)
-    profile_picture = models.ImageField(
-        upload_to='profile_pictures', null=True, blank=True)
+    profile_picture = CloudinaryField(
+        'profile_pictures', default='profile_pictures/default.jpg')
     address = models.CharField(max_length=255)
     institution = models.CharField(max_length=255)
     course_studied = models.CharField(max_length=255)
@@ -100,7 +101,7 @@ class Graduate(models.Model):
     preffered_job = ArrayField(models.CharField(
         max_length=225, choices=PREFERRED_JOB), default=list, blank=True)
     relocate = models.CharField(max_length=255)
-    cv = models.FileField(upload_to='cv', null=True, blank=True)
+    cv = CloudinaryField('cv', default='profile_pictures/default.jpg')
     relocation_availability = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     comments = models.TextField()
@@ -113,4 +114,4 @@ class Graduate(models.Model):
     reference_relationship_1 = models.CharField(max_length=225)
 
     def __str__(self):
-        return self.user
+        return str(self.user)
